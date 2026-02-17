@@ -1,0 +1,122 @@
+.registre-form {
+  height: 100%;
+  margin: 0;
+  padding: clamp(20px, 4vw, 44px);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  overflow: auto;
+  font-family: "Manrope", "Segoe UI", sans-serif;
+}
+
+.registre-form__hero {
+  margin: 0;
+}
+
+.registre-form__eyebrow {
+  margin: 0 0 8px;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #2d654b;
+  font-weight: 700;
+}
+
+.registre-form__title {
+  margin: 0;
+  font-size: clamp(1.6rem, 2vw, 2rem);
+  line-height: 1.1;
+  color: #0f4f32;
+}
+
+.registre-form__subtitle {
+  margin: 8px 0 0;
+  max-width: 48ch;
+  color: #2e6c50;
+  font-size: 0.92rem;
+}
+
+.registre-form__section {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.registre-form__section h2 {
+  margin: 0 0 2px;
+  font-size: 0.95rem;
+  color: #1f553d;
+  font-weight: 700;
+}
+
+.registre-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #22593f;
+}
+
+.registre-form__field input,
+.registre-form__field textarea {
+  width: 100%;
+  border: 1px solid #95c7a0;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 11px 12px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  color: #174530;
+}
+
+.registre-form__field input:focus,
+.registre-form__field textarea:focus {
+  outline: none;
+  border-color: #148851;
+  box-shadow: 0 0 0 3px rgba(20, 136, 81, 0.2);
+}
+
+.registre-form__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.registre-form__hint {
+  margin: 0;
+  color: #2f6950;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.registre-form__actions {
+  margin-top: 4px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.registre-form__button {
+  border: none;
+  border-radius: 12px;
+  padding: 12px 18px;
+  background: #148851;
+  color: #efffd2;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: filter 0.2s ease, transform 0.2s ease;
+}
+
+.registre-form__button:hover {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 640px) {
+  .registre-form__grid {
+    grid-template-columns: 1fr;
+  }
+}

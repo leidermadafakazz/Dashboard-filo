@@ -1,0 +1,24 @@
+.dashboard-page__title {
+  margin: 0;
+  font-size: 28px;
+}
+
+.dashboard-page__subtitle {
+  margin-top: 8px;
+  color: #5f6470;
+}
+
+.dashboard-page__card-area {
+  margin-top: 24px;
+}
+
+.dashboard-page__card {
+  background: #fff;
+  min-height: 320px;
+  border-radius: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+}

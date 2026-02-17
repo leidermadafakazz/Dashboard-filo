@@ -1,0 +1,42 @@
+.auth-bridge-page {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  background: #f4f6f9;
+}
+
+.auth-bridge-loader-wrap {
+  display: grid;
+  place-items: center;
+}
+
+.auth-bridge-loader {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 5px solid #d8deea;
+  border-top-color: #4b79ff;
+  animation: auth-bridge-spin 0.8s linear infinite;
+}
+
+.auth-bridge-loader--waiting {
+  border-top-color: #4b79ff;
+}
+
+.auth-bridge-loader--loading {
+  border-top-color: #f59e0b;
+}
+
+.auth-bridge-loader--success {
+  border-top-color: #16a34a;
+}
+
+.auth-bridge-loader--error {
+  border-top-color: #dc2626;
+}
+
+@keyframes auth-bridge-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

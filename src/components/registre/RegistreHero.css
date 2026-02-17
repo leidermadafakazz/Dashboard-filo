@@ -1,0 +1,65 @@
+.registre-hero {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 4px;
+  position: relative;
+  z-index: 1;
+}
+
+.registre-hero__eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.72rem;
+  color: #dbf7bf;
+  margin: 0 0 6px;
+  font-weight: 700;
+}
+
+.registre-hero__title {
+  font-family: "Sora", "Verdana", sans-serif;
+  font-size: clamp(1.5rem, 2.3vw, 2.1rem);
+  margin: 0 0 6px;
+  color: #f6ffe6;
+  max-width: 700px;
+  line-height: 1.15;
+}
+
+.registre-hero__subtitle {
+  max-width: 560px;
+  font-size: 0.95rem;
+  color: #d7f3b2;
+  margin: 0;
+}
+
+.registre-hero__badge {
+  background: linear-gradient(160deg, rgba(232, 251, 192, 0.95), rgba(198, 240, 150, 0.9));
+  border: 1px solid rgba(245, 255, 229, 0.72);
+  border-radius: 14px;
+  padding: 10px 14px;
+  box-shadow: 0 12px 28px rgba(8, 61, 36, 0.24);
+  text-align: right;
+}
+
+.registre-hero__badge span {
+  display: block;
+  font-size: 0.85rem;
+  color: #205038;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+}
+
+.registre-hero__badge strong {
+  font-size: 1.05rem;
+  color: #0d5b36;
+}
+
+@media (max-width: 900px) {
+  .registre-hero__badge {
+    width: 100%;
+    text-align: left;
+  }
+}

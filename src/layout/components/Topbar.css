@@ -1,0 +1,33 @@
+.topbar {
+  height: 70px;
+  background: #fff;
+  padding: 0 20px;
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #eee;
+  border-radius: 20px;
+}
+
+.topbar__search {
+  width: 250px;
+  max-width: 100%;
+  padding: 8px 12px;
+  border-radius: 20px;
+  border: 1px solid #ddd;
+  outline: none;
+}
+
+.topbar__profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.topbar__avatar {
+  width: 35px;
+  height: 35px;
+  background: #43db4d;
+  border-radius: 50%;
+}

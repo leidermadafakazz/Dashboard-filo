@@ -1,21 +1,32 @@
-import { Routes, Route, Navigate } from "react-router-dom";
-import Dashboard from "./pages/Dashboard";
-
+import { Navigate, Route, Routes } from "react-router-dom";
+import DashboardLayout from "./layout/DashboardLayout";
+import PrivateLayout from "./layout/PrivateLayout";
+import DashboardPage from "./pages/dashboard/DashboardPage";
+import ProductsPage from "./pages/products/ProductsPage";
+import RegistrePage from "./pages/registrarComercio/RegistrePage";
+import AuthBridgePage from "./pages/Auth/AuthBridgePage";
+import { hasCommerce } from "./Auth/auth";
 
 function App() {
+  const commerceReady = hasCommerce();
+
   return (
     <Routes>
-      {/* Ruta principal */}
-      <Route path="/" element={<Navigate to="/dashboard" />} />
+      <Route element={<PrivateLayout />}>
+        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+        <Route
+          path="/registre"
+          element={commerceReady ? <Navigate to="/dashboard" replace /> : <RegistrePage />}
+        />
 
-      {/* Dashboard */}
-      <Route path="/dashboard" element={<Dashboard />} />
+        <Route element={<DashboardLayout />}>
+          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/productos" element={<ProductsPage />} />
+        </Route>
+      </Route>
 
-      {/* Productos */}
-      
-
-      {/* Ruta 404 opcional */}
-      <Route path="*" element={<h1>Página no encontrada</h1>} />
+      <Route path="/auth/bridge" element={<AuthBridgePage />} />
+      <Route path="*" element={<h1>Pagina no encontrada</h1>} />
     </Routes>
   );
 }
