@@ -18,7 +18,7 @@ function PayloadPreview() {
         />
         <div className="registre-preview__overlay">
           <p className="registre-preview__eyebrow">Delivery online</p>
-          <h3 className="registre-preview__slogan">Cuando hay filo, piensamos en tu negocio</h3>
+          <h3 className="registre-preview__slogan">Cuando hay filo, pensamos en tu negocio</h3>
         </div>
       </div>
 
