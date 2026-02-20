@@ -33,7 +33,29 @@
   cursor: pointer;
   font-weight: 600;
 }
+/* Cuando el botón de borrar principal está activo */
+.products-page__new-button.active-delete {
+  background-color: #ef4444; /* Rojo */
+}
 
+/* El botón de la X sobre el producto (el target) */
+.products-page__delete-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
 .products-page__new-button:hover {
   background: #1f2937;
 }

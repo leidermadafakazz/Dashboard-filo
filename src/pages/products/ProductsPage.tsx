@@ -3,6 +3,7 @@ import { registrarProducto, type RegistrarProductoRequest } from "../../api/Regi
 import Drawer from "../../components/ui/Drawer";
 import "./ProductsPage.css";
 import { eliminarProducto } from "../../api/deletedProducto.api";
+import Swal from "sweetalert2";
 
 type Product = {
   id: number;
@@ -14,13 +15,13 @@ type Product = {
   
 };
 
-
 const ProductsPage = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isDrawerOpen_actu, setIsDrawerOpen_actu] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [isDeleteMode, setIsDeleteMode] = useState(false);
 
   const [formData, setFormData] = useState({
     categoria: "",
@@ -52,16 +53,15 @@ const ProductsPage = () => {
   const openDrawer_actu = () => {
     setIsDrawerOpen_actu(true);
   };
-
-
   const closeDrawer = () => {
     setIsDrawerOpen(false);
   };
    const closeDrawer_actu = () => {
     setIsDrawerOpen_actu(false);
   };
-
-
+  const toggleDeleteMode = () => {
+  setIsDeleteMode(!isDeleteMode);
+};
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setSubmitError(null);
@@ -93,16 +93,45 @@ const ProductsPage = () => {
     }
   };
   const handleDelete = async (id: number) => {
-  if (!window.confirm("¿Estás seguro de que deseas eliminar este producto?")) return;
+  const result = await Swal.fire({
+    title: '¿Estás seguro?',
+    text: "Esta acción eliminará el producto permanentemente",
+    icon: 'warning', 
+    showCancelButton: true,
+    confirmButtonColor: '#1fd15f',
+    cancelButtonColor: '#ef4444',
+    confirmButtonText: 'Sí, eliminarlo',
+    cancelButtonText: 'Cancelar',
+    reverseButtons: true,
+    background: '#ffffff',
+    customClass: {
+      popup: 'my-custom-popup',
+    },
+  });
 
-  try {
-    await eliminarProducto(id);
-    setProducts((currentProducts) => currentProducts.filter((p) => p.id !== id));
-  } catch (error) {
-    alert("No se pudo eliminar el producto");
+  if (result.isConfirmed) {
+    try {
+      await eliminarProducto(id);
+      setProducts((currentProducts) => currentProducts.filter((p) => p.id !== id));
+      
+      await Swal.fire({
+        title: '¡Eliminado!',
+        text: 'El producto ha sido borrado.',
+        icon: 'success',
+        timer: 1500,
+        showConfirmButton: false
+      });
+    } catch (error) {
+      await Swal.fire({
+        title: 'Error',
+        text: 'No se pudo eliminar.',
+        icon: 'error',
+        confirmButtonColor: '#1fd15f',
+        confirmButtonText: 'Aceptar'
+      });
+    }
   }
 };
-
   return (
     <section className="products-page">
       <div className="products-page__header">
@@ -117,6 +146,9 @@ const ProductsPage = () => {
           <button className="products-page__new-button" onClick={openDrawer_actu}>
             Actualizar producto
           </button>
+          <button className={`products-page__new-button ${isDeleteMode ? 'active-delete' : ''}`} onClick={toggleDeleteMode}>
+            {isDeleteMode ? "Finalizar Borrado" : "Borrar"}
+          </button>
           </div>
         
       </div>
@@ -125,19 +157,18 @@ const ProductsPage = () => {
         <div className="products-page__grid">
           {products.map((product) => (
             <article className="products-page__card" key={product.id}>
-              <button 
-                className="products-page__delete-button" 
-                onClick={() => handleDelete(product.id)}
-                title="Eliminar producto"
-              >
-                &times;
-              </button>
+              {isDeleteMode && (
+                <button className="products-page__delete-button"
+                  onClick={() => handleDelete(product.id)} 
+                  title="Eliminar producto"> &times;
+                </button>
+              )}
               <img className="products-page__image" src={product.imagen} alt={product.nombre} />
               <div className="products-page__card-body">
                 <span className="products-page__category">{product.categoria}</span>
                 <h3 className="products-page__name">{product.nombre}</h3>
                 <p className="products-page__description">{product.descripcion}</p>
-                <p className="products-page__price">S/ {product.precio}</p>
+                <p className="products-page__price">$ {product.precio}</p>
               </div>
             </article>
           ))}
@@ -362,5 +393,4 @@ const ProductsPage = () => {
     </section>
   );
 };
-
 export default ProductsPage;

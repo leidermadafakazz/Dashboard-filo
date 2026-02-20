@@ -1,9 +1,10 @@
+import axios from "axios";
 export const eliminarProducto = async (id: number): Promise<void> => {
-  const response = await fetch(`TU_URL_API/productos/${id}`, {
-    method: "DELETE",
-  });
-
-  if (!response.ok) {
+  try {
+    await axios.delete(`/productos/${id}`, {
+      method: "DELETE",
+    });
+  } catch (error) {
     throw new Error("Error al eliminar el producto");
   }
-};
+};  

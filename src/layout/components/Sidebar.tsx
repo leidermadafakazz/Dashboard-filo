@@ -4,7 +4,7 @@ import "./Sidebar.css";
 const Sidebar = () => {
   return (
     <aside className="sidebar">
-      <div className="sidebar__logo">Filo</div>
+      <div className="sidebar__logo">Filo Socio</div>
 
       <nav className="sidebar__menu">
         <NavLink to="/dashboard" className="sidebar__menu-item">
