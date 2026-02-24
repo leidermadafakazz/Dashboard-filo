@@ -1,3 +1,5 @@
+import type { IconType } from "react-icons";
+
 export type EstadoPedido = "pendiente" | "preparando" | "listo" | "cancelado";
 
 export type EstadoPaso = "completado" | "activo" | "pendiente";
@@ -21,7 +23,7 @@ export type PedidoEntrante = {
 export type PasoProgreso = {
   id: number;
   etiqueta: string;
-  icono: string;
+  icono: IconType;
   estado: EstadoPaso;
 };
 

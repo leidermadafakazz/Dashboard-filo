@@ -43,20 +43,19 @@ const OrderProgress = ({
           </div>
           <div className="pildora-temporizador">T</div>
         </div>
-
-        <div className="pista-progreso">
-          
-
-          <div className="pasos-progreso">
-            {pedidoActivo.pasos.map((paso) => (
-              <div className="paso" key={paso.id}>
-                <div className={`circulo-paso paso-${paso.estado}`}>{paso.icono}</div>
-                <span>{paso.etiqueta}</span> 
+        <div className="pasos-progreso">
+          {pedidoActivo.pasos.map((paso) => {
+              const Icono = paso.icono;
+              return (
+           <div className="paso" key={paso.id}>
+             <div className={`circulo-paso paso-${paso.estado}`}>
+               <Icono size={18} />
               </div>
-            ))}
-          </div>
+             <span>{paso.etiqueta}</span>
+           </div>
+              );
+          })}
         </div>
-
         <div className="meta-progreso">
           <div className="fila-meta">
             <span>Cliente</span>
