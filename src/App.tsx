@@ -6,6 +6,7 @@ import ProductsPage from "./pages/products/ProductsPage";
 import RegistrePage from "./pages/registrarComercio/RegistrePage";
 import AuthBridgePage from "./pages/Auth/AuthBridgePage";
 import { hasCommerce } from "./Auth/auth";
+import HistorialPage from "./pages/hostorial/historialpage";
 
 function App() {
   const commerceReady = hasCommerce();
@@ -22,6 +23,7 @@ function App() {
         <Route element={<DashboardLayout />}>
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/productos" element={<ProductsPage />} />
+          <Route path="/historial" element={<HistorialPage />} />
         </Route>
       </Route>
 

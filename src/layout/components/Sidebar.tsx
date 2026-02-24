@@ -1,6 +1,6 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { LayoutDashboard, Package, Settings, HelpCircle, LogOut } from "lucide-react";
+import { LayoutDashboard, Package, Settings, HelpCircle, LogOut, History } from "lucide-react";
 import "./Sidebar.css";
 
 interface SidebarProps {
@@ -36,6 +36,10 @@ const Sidebar = ({ isOpen, onToggle }: SidebarProps) => {
         <NavLink to="/productos" className="sidebar__menu-item">
           <Package size={20} />
           {isOpen && <span>Productos</span>}
+        </NavLink>
+        <NavLink to="/historial" className="sidebar__menu-item">
+          <History size={20} />
+          {isOpen && <span>Historial</span>}
         </NavLink>
       </nav>
 
