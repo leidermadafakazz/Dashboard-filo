@@ -32,9 +32,9 @@ export const iniciarPedidosSignalR = (handlers?: PedidoSignalrHandlers): (() => 
       id: 1240,
       codigo: "#1240",
       cliente: "Carlos Mendez",
-      monto: "$31.20",
+      monto: "$50.000",
       metodoPago: "Efectivo",
-   
+
       items: [
         { id: 1, nombre: "1x Hamburguesa Clasica" },
         { id: 2, nombre: "1x Papas Medianas" },
@@ -44,9 +44,9 @@ export const iniciarPedidosSignalR = (handlers?: PedidoSignalrHandlers): (() => 
       id: 1241,
       codigo: "#1241",
       cliente: "Daniela Ruiz",
-      monto: "$56.90",
+      monto: "$35.000",
       metodoPago: "Tarjeta de Credito",
-     
+
       items: [
         { id: 1, nombre: "2x Pizza Hawaiana" },
         { id: 2, nombre: "1x Limonada 1L" },

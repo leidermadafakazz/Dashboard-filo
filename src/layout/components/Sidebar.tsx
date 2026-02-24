@@ -1,26 +1,69 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { LayoutDashboard, Package, Settings, HelpCircle, LogOut } from "lucide-react";
 import "./Sidebar.css";
 
-const Sidebar = () => {
+interface SidebarProps {
+  isOpen: boolean;
+  onToggle: () => void;
+}
+
+const Sidebar = ({ isOpen, onToggle }: SidebarProps) => {
+  const navigate = useNavigate();
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
+
+  const handleLogout = () => {
+    localStorage.clear();
+    setShowLogoutModal(true);
+    setTimeout(() => {
+      navigate("/users/login", { replace: true });
+    }, 2000);
+  };
+
   return (
-    <aside className="sidebar">
-      <div className="sidebar__logo">Filo Socio</div>
+    <aside className={`sidebar ${isOpen ? "sidebar--open" : "sidebar--closed"}`}>
+
+      <button className="sidebar__toggle" onClick={onToggle}>
+        {isOpen ? "✕" : "☰"}
+      </button>
+      {isOpen && <h1 className="sidebar__title">Filo Socio</h1>}
 
       <nav className="sidebar__menu">
         <NavLink to="/dashboard" className="sidebar__menu-item">
-          Dashboard
+          <LayoutDashboard size={20} />
+          {isOpen && <span>Dashboard</span>}
         </NavLink>
-
         <NavLink to="/productos" className="sidebar__menu-item">
-          Productos
+          <Package size={20} />
+          {isOpen && <span>Productos</span>}
         </NavLink>
       </nav>
 
       <div className="sidebar__bottom">
-        <p>Configuracion</p>
-        <p>Ayuda</p>
-        <p>Salir</p>
+        <button className="sidebar__bottom-logout">
+          <Settings size={20} />
+          {isOpen && <span>Configuracion</span>}
+        </button>
+        <button className="sidebar__bottom-logout">
+          <HelpCircle size={20} />
+          {isOpen && <span>Ayuda</span>}
+        </button>
+        <button className="sidebar__bottom-logout" onClick={handleLogout}>
+          <LogOut size={20} />
+          {isOpen && <span>Salir</span>}
+        </button>
       </div>
+
+      {showLogoutModal && (
+        <div className="logout-overlay">
+          <div className="logout-box">
+            <div className="logout-icon">✓</div>
+            <h3>Sesión cerrada</h3>
+            <p>Has salido correctamente</p>
+            <span>Redirigiendo...</span>
+          </div>
+        </div>
+      )}
     </aside>
   );
 };

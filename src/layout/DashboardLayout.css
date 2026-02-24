@@ -1,8 +1,8 @@
 .dashboard-layout {
   display: flex;
-padding: 10px;
-  min-height: calc(100dvh - 10px);
-  width: 100%;
+  height: 100vh;
+  gap: 10px;
+  padding: 10px;
   background: #f4f6f9;
 }
 
@@ -17,4 +17,81 @@ padding: 10px;
   flex: 1;
   padding: 24px;
   overflow: auto;
+}
+
+.logout-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 10, 10, 0.7);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.logout-box {
+  background: linear-gradient(145deg, #ffffff, #f3f3f3);
+  width: 320px;
+  max-width: 90%;
+  padding: 30px 25px;
+  border-radius: 18px;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  animation: logoutScale 0.3s ease;
+}
+
+/* Icono */
+
+.logout-icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 15px;
+  border-radius: 50%;
+  background: #ff5252;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 26px;
+  font-weight: bold;
+}
+
+/* Textos */
+
+.logout-box h3 {
+  font-size: 22px;
+  margin-bottom: 6px;
+  color: #222;
+}
+
+.logout-box p {
+  font-size: 14px;
+  color: #555;
+
+  margin-bottom: 15px;
+}
+
+.logout-box span {
+  font-size: 12px;
+  color: #888;
+}
+
+/* Botón */
+
+.logout-btn {
+  margin-top: 18px;
+  background: #00c853;
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  padding: 10px 22px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.logout-btn:hover {
+  background: #00b34a;
+  transform: translateY(-2px);
 }
