@@ -1,38 +1,28 @@
+import { FaUtensils, FaMotorcycle, FaCheck } from "react-icons/fa";
 import type {
   EstadoPedido,
   PasoProgreso,
   PedidoActivo,
   PedidoEntrante,
 } from "../types/order.types";
-
-export const construirPasosPreparando = (): PasoProgreso[] => [
-  { id: 1, etiqueta: "Pedido Aceptado", icono: "✓", estado: "completado" },
-  { id: 2, etiqueta: "Preparando Pedido", icono: "🍳", estado: "activo" },
-  { id: 3, etiqueta: "Pedido Enviado", icono: "🛵", estado: "pendiente" },
-];
-
-export const construirPasosPendiente = (): PasoProgreso[] => [
-  { id: 1, etiqueta: "Pedido Aceptado", icono: "✓", estado: "activo" },
-  { id: 2, etiqueta: "Preparando Pedido", icono: "🍳", estado: "pendiente" },
-  { id: 3, etiqueta: "Pedido Enviado", icono: "🛵", estado: "pendiente" },
-];
-
-export const construirPasosListo = (): PasoProgreso[] => [
-  { id: 1, etiqueta: "Pedido Aceptado", icono: "✓", estado: "completado" },
-  { id: 2, etiqueta: "Preparando Pedido", icono: "🍳", estado: "completado" },
-  { id: 3, etiqueta: "Pedido Enviado", icono: "🛵", estado: "activo" },
-];
+const pasosBase = [
+  { id: 1, etiqueta: "Pedido Aceptado", icono: FaCheck }, 
+  { id: 2, etiqueta: "Preparando Pedido", icono: FaUtensils },
+  { id: 3, etiqueta: "Pedido Enviado", icono: FaMotorcycle },
+] satisfies Omit<PasoProgreso, "estado">[];
+export const construirPasos = (pasoActivo:number): PasoProgreso[] => 
+  pasosBase.map((paso) => ({ ...paso, estado: paso.id <= pasoActivo ? "completado" : "pendiente" }));
 
 export const construirPasosPorEstado = (estado: EstadoPedido): PasoProgreso[] => {
   if (estado === "listo") {
-    return construirPasosListo();
+    return construirPasos(3);
   }
 
   if (estado === "preparando") {
-    return construirPasosPreparando();
+    return construirPasos(2); 
   }
 
-  return construirPasosPendiente();
+  return construirPasos(1);
 };
 
 export const construirPedidoActivoDesdePedido = (

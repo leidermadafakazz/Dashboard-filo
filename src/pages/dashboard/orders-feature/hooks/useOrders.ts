@@ -8,7 +8,7 @@ import {
   type PedidoSignalrPayload,
 } from "../../../../api/Pedidos.signalr";
 import {
-  construirPasosListo,
+  construirPasosPorEstado,
   construirPedidoActivoDesdePedido,
 } from "../machines/orderMachine";
 import type { PedidoActivo, PedidoEntrante } from "../types/order.types";
@@ -133,7 +133,7 @@ export const useOrders = () => {
 
       return {
         ...pedidoActivoPrevio,
-        pasos: construirPasosListo(),
+        pasos: construirPasosPorEstado("listo"),
       };
     });
 
