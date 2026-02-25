@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./HistorialPage.css";
+import "../hostorial/historialPage.css";
 
 type Filtro = "todo" | "hoy" | "venta" | "semana" | "Registro" | "Eliminacion";
 
