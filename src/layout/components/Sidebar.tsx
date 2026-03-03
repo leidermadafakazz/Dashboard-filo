@@ -21,7 +21,7 @@ const Sidebar = ({ isOpen, onToggle }: SidebarProps) => {
   };
 
   return (
-    <aside className={`sidebar ${isOpen ? "sidebar--open" : "sidebar--closed"}`}>
+    <aside className={`sidebar ${isOpen ? "sidebar--open" : "sidebar--closed"}`}> 
 
       <button className="sidebar__toggle" onClick={onToggle}>
         {isOpen ? "✕" : "☰"}
