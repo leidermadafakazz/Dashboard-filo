@@ -4,13 +4,13 @@ export type PedidoEstadoResponse = {
 
 const PEDIDOS_MS_BASE_URL = "https://localhost:7164";
 
-const construirEndpointPreparando = (pedidoId: number): string =>
+const construirEndpointPreparando = (pedidoId: string | number): string =>
   `${PEDIDOS_MS_BASE_URL}/${pedidoId}/PreparandoPedido`;
 
-const construirEndpointListo = (pedidoId: number): string =>
+const construirEndpointListo = (pedidoId: string | number): string =>
   `${PEDIDOS_MS_BASE_URL}/${pedidoId}/PedidoListo`;
 
-export const marcarPedidoPreparando = async (pedidoId: number) => {
+export const marcarPedidoPreparando = async (pedidoId: string | number) => {
   const endpoint = construirEndpointPreparando(pedidoId);
   console.log(`[MS] POST ${endpoint}`);
   console.log("[MS] Payload sugerido:", { pedidoId, accion: "preparando" });
@@ -25,7 +25,7 @@ export const marcarPedidoPreparando = async (pedidoId: number) => {
   }
 };
 
-export const marcarPedidoListo = async (pedidoId: number) => {
+export const marcarPedidoListo = async (pedidoId: string | number) => {
   const endpoint = construirEndpointListo(pedidoId);
   console.log(`[MS] POST ${endpoint}`);
   console.log("[MS] Payload sugerido:", { pedidoId, accion: "listo" });

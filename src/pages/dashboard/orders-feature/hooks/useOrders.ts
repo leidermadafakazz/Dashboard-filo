@@ -11,11 +11,73 @@ import {
   construirPasosPorEstado,
   construirPedidoActivoDesdePedido,
 } from "../machines/orderMachine";
-import type { PedidoActivo, PedidoEntrante } from "../types/order.types";
+import type { EstadoPedido, PedidoActivo, PedidoEntrante } from "../types/order.types";
 
 const REPARTIDOR_POR_DEFECTO = "Mark R.";
 const CONSEJO_DASHBOARD =
   "Reducir 2 minutos de preparacion mejora la retencion de clientes en 15%.";
+const FORMATO_MONEDA = new Intl.NumberFormat("es-CO", {
+  style: "currency",
+  currency: "COP",
+  maximumFractionDigits: 0,
+});
+
+const hashToId = (value: string): number => {
+  let hash = 0;
+
+  for (let index = 0; index < value.length; index += 1) {
+    hash = (hash * 31 + value.charCodeAt(index)) | 0;
+  }
+
+  return Math.abs(hash) + 1;
+};
+
+const normalizarEstado = (estadoSignalR: string): EstadoPedido => {
+  const estadoNormalizado = estadoSignalR.trim().toLowerCase();
+
+  if (estadoNormalizado === "creado" || estadoNormalizado === "pendiente") {
+    return "pendiente";
+  }
+
+  if (estadoNormalizado === "preparando") {
+    return "preparando";
+  }
+
+  if (estadoNormalizado === "listo") {
+    return "listo";
+  }
+
+  if (estadoNormalizado === "cancelado") {
+    return "cancelado";
+  }
+
+  return "pendiente";
+};
+
+const transformarPayloadAPedidoEntrante = (payload: PedidoSignalrPayload): PedidoEntrante => {
+  const id = hashToId(payload.pedidoId);
+
+  return {
+    id,
+    codigo: payload.pedidoId,
+    pedidoId: payload.pedidoId,
+    comercioId: payload.comercioId,
+    usuarioId: payload.usuarioId,
+    notaDirecion: payload.notaDirecion,
+    mensaje: payload.mensaje,
+    cliente: payload.cliente,
+    monto: FORMATO_MONEDA.format(payload.monto),
+    montoValor: payload.monto,
+    metodoPago: payload.metodoPago,
+    estadoSignalR: payload.estado,
+    items: payload.items.map((item) => ({
+      id: item.id,
+      nombre: item.nombre,
+      detalles: item.detalles,
+    })),
+    estado: normalizarEstado(payload.estado),
+  };
+};
 
 export const useOrders = () => {
   const [pedidosEntrantes, setPedidosEntrantes] = useState<PedidoEntrante[]>([]);
@@ -25,16 +87,12 @@ export const useOrders = () => {
     const limpiar = iniciarPedidosSignalR({
       onPedidoRecibido: (payload: PedidoSignalrPayload) => {
         setPedidosEntrantes((pedidosPrevios) => {
-          const existePedido = pedidosPrevios.some((pedido) => pedido.id === payload.id);
+          const nuevoPedido = transformarPayloadAPedidoEntrante(payload);
+          const existePedido = pedidosPrevios.some((pedido) => pedido.pedidoId === nuevoPedido.pedidoId);
 
           if (existePedido) {
             return pedidosPrevios;
           }
-
-          const nuevoPedido: PedidoEntrante = {
-            ...payload,
-            estado: "pendiente",
-          };
 
           setPedidoActivo((pedidoActivoPrevio) =>
             pedidoActivoPrevio ?? construirPedidoActivoDesdePedido(nuevoPedido, REPARTIDOR_POR_DEFECTO),
@@ -72,7 +130,7 @@ export const useOrders = () => {
   };
 
   const aceptarPedido = async (pedido: PedidoEntrante) => {
-    await marcarPedidoPreparando(pedido.id);
+    await marcarPedidoPreparando(pedido.pedidoId);
 
     const pedidoActualizado: PedidoEntrante = {
       ...pedido,
@@ -118,7 +176,7 @@ export const useOrders = () => {
       return;
     }
 
-    await marcarPedidoListoApi(pedidoActivo.pedidoId);
+    await marcarPedidoListoApi(pedidoActivo.pedidoExternoId);
 
     setPedidosEntrantes((pedidosPrevios) =>
       pedidosPrevios.map((pedido) =>

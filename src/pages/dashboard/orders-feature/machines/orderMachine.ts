@@ -30,9 +30,18 @@ export const construirPedidoActivoDesdePedido = (
   repartidor: string,
 ): PedidoActivo => ({
   pedidoId: pedido.id,
+  pedidoExternoId: pedido.pedidoId,
   codigo: pedido.codigo,
   entregaEsperada: "12:45 PM",
   cliente: pedido.cliente,
+  comercioId: pedido.comercioId,
+  usuarioId: pedido.usuarioId,
+  notaDirecion: pedido.notaDirecion,
+  mensaje: pedido.mensaje,
+  metodoPago: pedido.metodoPago,
+  monto: pedido.monto,
+  estadoSignalR: pedido.estadoSignalR,
+  items: pedido.items,
   repartidor,
   pasos: construirPasosPorEstado(pedido.estado),
 });

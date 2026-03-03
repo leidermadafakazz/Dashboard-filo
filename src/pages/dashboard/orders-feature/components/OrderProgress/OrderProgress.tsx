@@ -38,7 +38,9 @@ const OrderProgress = ({
       <article className="tarjeta-progreso">
         <div className="superior-progreso">
           <div>
-            <h3>Pedido {pedidoActivo.codigo}</h3>
+            <h3>Pedido Activo</h3>
+            <p className="id-principal-pedido">{pedidoActivo.pedidoExternoId}</p>
+            <p>Cliente: {pedidoActivo.cliente}</p>
             <p>Entrega esperada: {pedidoActivo.entregaEsperada}</p>
           </div>
           <div className="pildora-temporizador">T</div>
@@ -58,12 +60,41 @@ const OrderProgress = ({
         </div>
         <div className="meta-progreso">
           <div className="fila-meta">
-            <span>Cliente</span>
-            <strong>{pedidoActivo.cliente}</strong>
+            <span>Comercio</span>
+            <strong>{pedidoActivo.comercioId}</strong>
           </div>
           <div className="fila-meta">
-            <span>Repartidor</span>
-            <strong>{pedidoActivo.repartidor}</strong>
+            <span>Pago</span>
+            <strong>
+              {pedidoActivo.monto} - {pedidoActivo.metodoPago}
+            </strong>
+          </div>
+          <div className="fila-meta">
+            <span>Estado</span>
+            <strong>{pedidoActivo.estadoSignalR ?? "pendiente"}</strong>
+          </div>
+          {pedidoActivo.notaDirecion ? (
+            <div className="fila-meta">
+              <span>Nota</span>
+              <strong>{pedidoActivo.notaDirecion}</strong>
+            </div>
+          ) : null}
+          {pedidoActivo.mensaje ? (
+            <div className="fila-meta">
+              <span>Mensaje</span>
+              <strong>{pedidoActivo.mensaje}</strong>
+            </div>
+          ) : null}
+          <div className="detalle-items-progreso">
+            <span>Items</span>
+            <ul className="items-pedido items-pedido-progreso">
+              {pedidoActivo.items.map((item) => (
+                <li key={`${pedidoActivo.pedidoExternoId}-${item.id}`}>
+                  {item.nombre}
+                  {item.detalles ? ` (${item.detalles})` : ""}
+                </li>
+              ))}
+            </ul>
           </div>
           <button type="button" className="boton boton-listo" onClick={onMarcarListo}>
             Marcar como Listo para Recoger

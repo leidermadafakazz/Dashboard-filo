@@ -142,6 +142,15 @@
   color: #617065;
 }
 
+.id-principal-pedido {
+  margin-top: 6px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
+  font-size: 12px;
+  word-break: break-all;
+  color: #45554b;
+}
+
 .contenedor-monto-pedido {
   text-align: right;
 }
@@ -340,6 +349,21 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+
+.detalle-items-progreso {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.detalle-items-progreso > span {
+  font-size: 14px;
+  color: #617065;
+}
+
+.items-pedido-progreso {
+  margin: 0;
 }
 
 .fila-meta {
