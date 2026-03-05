@@ -6,6 +6,8 @@ import type { FormState, Payload } from "../../components/registre/types";
 import { registrarComercio } from "../../api/RegistrarComercio.api";
 import "./RegistrePage.css";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+
 const initialForm: FormState = {
   nombre: "",
   descripcion: "",
@@ -18,12 +20,10 @@ const initialForm: FormState = {
 function RegistrePage() {
   const [form, setForm] = useState<FormState>(initialForm);
   const navigate = useNavigate();
+  const { hasCommerce, setCommerceId } = useAuth();
 
   useEffect(() => {
-    const userId = localStorage.getItem("userId");
-    const comercioId = localStorage.getItem("comercioId");
-
-    if (userId && comercioId) {
+    if (hasCommerce) {
       navigate("/dashboard", { replace: true });
       return;
     }
@@ -35,7 +35,7 @@ function RegistrePage() {
 
     window.addEventListener("message", handler);
     return () => window.removeEventListener("message", handler);
-  }, [navigate]);
+  }, [hasCommerce, navigate]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = event.target;
@@ -64,6 +64,7 @@ function RegistrePage() {
 
     try {
       const response = await registrarComercio(data);
+      setCommerceId(String(response.id));
       console.log("Comercio registrado:", response);
       if (response) navigate("/dashboard", { replace: true });
     } catch (error) {

@@ -1,0 +1,72 @@
+.config-page {
+  display: grid;
+  gap: 16px;
+}
+
+.config-page__header h1 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.config-page__header p {
+  margin: 6px 0 0;
+  color: #4b5563;
+}
+
+.config-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.config-card--primary {
+  border-color: #bfdbfe;
+  background: #f8fbff;
+}
+
+.config-card h2 {
+  margin: 0 0 14px;
+  font-size: 18px;
+}
+
+.config-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.config-grid > div {
+  background: #f9fafb;
+  border: 1px solid #edf0f2;
+  border-radius: 10px;
+  padding: 10px;
+  display: grid;
+  gap: 3px;
+}
+
+.config-grid__full {
+  grid-column: 1 / -1;
+}
+
+.config-label {
+  font-size: 11px;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.config-action {
+  margin-top: 14px;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 14px;
+  background: #16a34a;
+  color: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.config-action:hover {
+  background: #15803d;
+}

@@ -5,11 +5,12 @@ import DashboardPage from "./pages/dashboard/DashboardPage";
 import ProductsPage from "./pages/products/ProductsPage";
 import RegistrePage from "./pages/registrarComercio/RegistrePage";
 import AuthBridgePage from "./pages/Auth/AuthBridgePage";
-import { hasCommerce } from "./Auth/auth";
 import HistorialPage from "./pages/hostorial/historialpage";
+import { useAuth } from "./context/AuthContext";
+import ConfiguracionPage from "./pages/configuracion/ConfiguracionPage";
 
 function App() {
-  const commerceReady = hasCommerce();
+  const { hasCommerce: commerceReady } = useAuth();
 
   return (
     <Routes>
@@ -24,6 +25,7 @@ function App() {
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/productos" element={<ProductsPage />} />
           <Route path="/historial" element={<HistorialPage />} />
+          <Route path="/configuracion" element={<ConfiguracionPage />} />
         </Route>
       </Route>
 

@@ -1,6 +1,9 @@
 
 import "./PayloadPreview.css" ;
 
+const REGISTRO_BANNER_URL =
+  import.meta.env.VITE_REGISTRO_BANNER_URL ??
+  "https://lzcqnygnduehntdbijzw.supabase.co/storage/v1/object/public/filo/filobanerR.webp";
 
 function PayloadPreview() {
 
@@ -12,7 +15,7 @@ function PayloadPreview() {
         <div className="registre-preview__eslogan"><p>¿Con filo?, haz pedidos...</p></div>
         <img
           className="registre-preview__image"
-          src="https://lzcqnygnduehntdbijzw.supabase.co/storage/v1/object/public/filo/filobanerR.webp"
+          src={REGISTRO_BANNER_URL}
           alt="Banner de registro"
           loading="lazy"
         />

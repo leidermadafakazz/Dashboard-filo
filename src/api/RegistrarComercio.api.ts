@@ -17,6 +17,6 @@ export type ComercioResponse = {
 };
 
 export const registrarComercio = async (dto: ComercioRequest) => {
-  const { data } = await apiClient.post<ComercioResponse>("/RegistrarComercio", dto);
+  const { data } = await apiClient.post<ComercioResponse>("Comercios/CrearComercios", dto);
   return data;
 };

@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { setCommerceId, setToken, setUserId } from "../../Auth/auth";
 import { exchangeBridgeCode } from "../../api/CodigoAcceso.api";
+import { useAuth } from "../../context/AuthContext";
 import "./AuthBridgePage.css";
 
-const SOURCE_ORIGIN = "http://localhost:3000";
+const SOURCE_ORIGIN = import.meta.env.VITE_AUTH_BRIDGE_SOURCE_ORIGIN ?? "http://localhost:4002";
 
 type BridgeMessage = {
   code?: unknown;
@@ -14,13 +14,14 @@ function AuthBridgePage() {
   const [status, setStatus] = useState<"waiting" | "loading" | "success" | "error">("waiting");
   const inFlight = useRef(false);
   const navigate = useNavigate();
+  const { setSession } = useAuth();
 
   useEffect(() => {
     const handleMessage = async (event: MessageEvent<BridgeMessage>) => {
       if (event.origin !== SOURCE_ORIGIN || inFlight.current) return;
 
-      const accessCode = typeof event.data?.code === "string" ? event.data.code.trim() : "";
-      if (!accessCode) {
+      const codigo = typeof event.data?.code === "string" ? event.data.code.trim() : "";
+      if (!codigo) {
         setStatus("error");
         return;
       }
@@ -30,13 +31,9 @@ function AuthBridgePage() {
 
       try {
         const data = await exchangeBridgeCode({
-          accessCode,
-          audience: "ControlGastosClients",
+          codigo,
         });
-
-        setToken(data.token);
-        setUserId(String(data.id));
-        setCommerceId(data.comercioId);
+        setSession(data);
 
         setStatus("success");
         navigate("/dashboard", { replace: true });
@@ -49,7 +46,7 @@ function AuthBridgePage() {
 
     window.addEventListener("message", handleMessage);
     return () => window.removeEventListener("message", handleMessage);
-  }, [navigate]);
+  }, [navigate, setSession]);
 
   return (
     <div className="auth-bridge-page">

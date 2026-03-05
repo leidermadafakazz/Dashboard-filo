@@ -1,6 +1,7 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useState } from "react";
 import { LayoutDashboard, Package, Settings, HelpCircle, LogOut, History } from "lucide-react";
+import { useAuth } from "../../context/AuthContext";
 import "./Sidebar.css";
 
 interface SidebarProps {
@@ -8,23 +9,24 @@ interface SidebarProps {
   onToggle: () => void;
 }
 
+const EXTERNAL_LOGIN_URL = import.meta.env.VITE_EXTERNAL_LOGIN_URL ?? "http://localhost:3000/users/login";
+
 const Sidebar = ({ isOpen, onToggle }: SidebarProps) => {
-  const navigate = useNavigate();
   const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const { clearSession } = useAuth();
 
   const handleLogout = () => {
-    localStorage.clear();
+    clearSession();
     setShowLogoutModal(true);
     setTimeout(() => {
-      navigate("/users/login", { replace: true });
-    }, 2000);
+      window.location.replace(EXTERNAL_LOGIN_URL);
+    }, 1200);
   };
 
   return (
-    <aside className={`sidebar ${isOpen ? "sidebar--open" : "sidebar--closed"}`}> 
-
+    <aside className={`sidebar ${isOpen ? "sidebar--open" : "sidebar--closed"}`}>
       <button className="sidebar__toggle" onClick={onToggle}>
-        {isOpen ? "✕" : "☰"}
+        {isOpen ? "X" : "|||"}
       </button>
       {isOpen && <h1 className="sidebar__title">Filo Socio</h1>}
 
@@ -44,10 +46,10 @@ const Sidebar = ({ isOpen, onToggle }: SidebarProps) => {
       </nav>
 
       <div className="sidebar__bottom">
-        <button className="sidebar__bottom-logout">
+        <NavLink to="/configuracion" className="sidebar__bottom-link">
           <Settings size={20} />
           {isOpen && <span>Configuracion</span>}
-        </button>
+        </NavLink>
         <button className="sidebar__bottom-logout">
           <HelpCircle size={20} />
           {isOpen && <span>Ayuda</span>}
@@ -61,8 +63,8 @@ const Sidebar = ({ isOpen, onToggle }: SidebarProps) => {
       {showLogoutModal && (
         <div className="logout-overlay">
           <div className="logout-box">
-            <div className="logout-icon">✓</div>
-            <h3>Sesión cerrada</h3>
+            <div className="logout-icon">OK</div>
+            <h3>Sesion cerrada</h3>
             <p>Has salido correctamente</p>
             <span>Redirigiendo...</span>
           </div>

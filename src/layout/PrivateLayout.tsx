@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
-import { isAuthenticated } from "../Auth/auth";
+import { useAuth } from "../context/AuthContext";
 
-const EXTERNAL_LOGIN_URL = "http://localhost:3000/users/login";
+const EXTERNAL_LOGIN_URL = import.meta.env.VITE_EXTERNAL_LOGIN_URL ?? "http://localhost:3000/users/login";
 
 const PrivateLayout = () => {
-  const authenticated = isAuthenticated();
+  const { isAuthenticated: authenticated } = useAuth();
 
   useEffect(() => {
     if (!authenticated) {

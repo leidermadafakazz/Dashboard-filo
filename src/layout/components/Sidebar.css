@@ -78,6 +78,20 @@
   gap: 8px;
 }
 
+.sidebar__bottom-link {
+  text-decoration: none;
+  color: #777;
+  font-size: 15px;
+  padding: 10px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  white-space: nowrap;
+}
+
 .sidebar__bottom-logout {
   background: none;
   border: none;
@@ -95,6 +109,12 @@
 }
 
 .sidebar__bottom-logout:hover {
+  background-color: #e8f5e9;
+  color: #1b5e20;
+}
+
+.sidebar__bottom-link:hover,
+.sidebar__bottom-link.active {
   background-color: #e8f5e9;
   color: #1b5e20;
 }

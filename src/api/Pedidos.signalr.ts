@@ -19,9 +19,11 @@ export type PedidoSignalrHandlers = {
   onError?: (error: unknown) => void;
 };
 
-const NOTIFICACIONES_HUB_URL = "https://localhost:5000/notificacionesHub";
-const COMERCIO_ID =  "gordo-burguer"; //viene de token de inicio
-const REINTENTO_INICIAL_MS = 5000;
+const NOTIFICACIONES_HUB_URL =
+  import.meta.env.VITE_NOTIFICACIONES_HUB_URL ?? "https://localhost:5000/notificacionesHub";
+const COMERCIO_ID = import.meta.env.VITE_COMERCIO_ID ?? "gordo-burguer"; // viene de token de inicio
+const REINTENTO_INICIAL_MS = Number(import.meta.env.VITE_SIGNALR_REINTENTO_INICIAL_MS ?? "5000");
+const REINTENTO_MS = Number.isFinite(REINTENTO_INICIAL_MS) ? REINTENTO_INICIAL_MS : 5000;
 
 const obtenerCampo = (objeto: Record<string, unknown>, claves: string[]): unknown => {
   for (const clave of claves) {
@@ -204,7 +206,7 @@ export const iniciarPedidosSignalR = (handlers?: PedidoSignalrHandlers): (() => 
       console.log("[SignalR] Error al conectar al hub.", error);
       reintentoInicialId = window.setTimeout(() => {
         void conectar();
-      }, REINTENTO_INICIAL_MS);
+      }, REINTENTO_MS);
     }
   };
 

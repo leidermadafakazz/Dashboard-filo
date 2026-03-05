@@ -2,11 +2,11 @@ import { Navigate, Outlet } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
 import Topbar from "./components/Topbar";
 import "./DashboardLayout.css";
-import { hasCommerce } from "../Auth/auth";
 import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
 
 const DashboardLayout = () => {
-  const commerceReady = hasCommerce();
+  const { hasCommerce: commerceReady } = useAuth();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   if (!commerceReady) {

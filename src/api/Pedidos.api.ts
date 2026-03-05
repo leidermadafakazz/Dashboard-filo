@@ -2,7 +2,7 @@ export type PedidoEstadoResponse = {
   ok: boolean;
 };
 
-const PEDIDOS_MS_BASE_URL = "https://localhost:7164";
+const PEDIDOS_MS_BASE_URL = import.meta.env.VITE_PEDIDOS_MS_BASE_URL ?? "https://localhost:7164";
 
 const construirEndpointPreparando = (pedidoId: string | number): string =>
   `${PEDIDOS_MS_BASE_URL}/${pedidoId}/PreparandoPedido`;
